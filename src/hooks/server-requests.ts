@@ -2,6 +2,7 @@ import { Message } from '../types/message';
 import { mockUsers } from '../assets/mockUsers'; // todo: remove this line after server implementation
 
 const endpoint = '../assets/'; // todo: add endpoint (server) address (starting with http://)
+const serverEndpoint = 'http://localhost:3003'
 
 
 /**
@@ -27,10 +28,13 @@ export async function getMessages() {
  **/
 export async function getUsers() {
   // todo: replace this with fetch to get the user list from the server
-  const { mockUsers } = await import(`${endpoint}/mockUsers`);
-  return mockUsers;
+  const mockUser = await fetch(`${serverEndpoint}/mockUsers`);
+  return await mockUser.json();
 }
-
+// $$ 
+// fetch(`http://localhost:3003/mockUsers`).then((response) =>
+//     response.json()
+//   );
 
 /**
  * GET request to get the full details of a user
@@ -48,6 +52,8 @@ export async function getUserDetails(userId: number) {
  **/
 export async function addNewMessage(message: Message) {
   // todo: implement sending a new message to the server
+  const res = await fetch(`${serverEndpoint}/new-message`, {method: 'POST', body: JSON.stringify({...message, id: 101}) });
+  console.log(res);
 }
 
 /**
