@@ -10,15 +10,16 @@ const serverEndpoint = 'http://localhost:3003'
  **/
 export async function getMessages() {
   // todo: replace this with fetch to get the messages from the server
-  const { mockMessages } = await import(`${endpoint}/mockMessages`);
+  const mockMessagesWithNames = fetch (`${serverEndpoint}/mockMessages`).
+  then((response) => response.json());
 
   // todo: this should be implemented in the server. Chat Messages should already have the authors' names.
   // todo: remove this mapping when getting the data from the server
-  const mockMessagesWithNames = mockMessages.map((message: Message) => {
-    const author = mockUsers.find(user => user.id === message.authorId);
-    const authorName = author && author.name;
-    return { ...message, authorName };
-  });
+  // const mockMessagesWithNames = mockMessages.map((message: Message) => {
+  //   const author = mockUsers.find(user => user.id === message.authorId);
+  //   const authorName = author && author.name;
+  //   return { ...message, authorName };
+  // });
 
   return mockMessagesWithNames;
 }
